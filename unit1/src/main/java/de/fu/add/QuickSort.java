@@ -14,8 +14,10 @@ public class QuickSort {
 	}
 
 	private void sort(int left, int right) {
+		System.out.print(left + " - " + right + ": ");
 		if (right - left <= b) {
-			System.out.println(">>Bubblesort");
+			System.out.print("Bubblesort");
+			System.out.println();
 			for (int n = right; n > left + 1; n--) {
 				for (int i = left; i < n - 1; i++) {
 					if (sequence[i] > sequence[i + 1]) {
@@ -25,12 +27,13 @@ public class QuickSort {
 			}
 		} else {
 			int splitIndex = partition(left, right);
-			printSequence(0, sequence.length - 1);
-			System.out.print("  -->" + left + " " + splitIndex + " (" + sequence[splitIndex] + ") " + right);
+			System.out.print("partitioning with " + splitIndex);
 			System.out.println();
 			sort(left, splitIndex - 1);
-			sort(splitIndex, right);
+			sort(splitIndex + 1, right);
 		}
+		printSequence(left, right);
+		System.out.println();
 	}
 
 	private void printSequence(int l, int r) {
@@ -46,13 +49,10 @@ public class QuickSort {
 	private int partition(int left, int right) {
 		int pivotIndex = left + (int) ((right - left) * Math.random());
 		float pivot = sequence[pivotIndex];
-		System.out.println("pivot is " + pivot + " = [" + (pivotIndex - left) + "] between " + left + " - " + right);
 		int lI = left;
 		int rI = right;
 		int firstPivotIndex = sequence.length;
 		while (lI <= rI) {
-			printSequence(left, right);
-			System.out.println();
 			if (sequence[lI] > pivot) {
 				swapAt(rI, lI);
 				rI--;
