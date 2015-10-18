@@ -15,36 +15,65 @@ public class QuickSort {
 
 	private void sort(int left, int right) {
 		if (right - left <= b) {
-			if (sequence[right] < sequence[left]) {
-				float tmp = sequence[left];
-				sequence[left] = sequence[right];
-				sequence[right] = tmp;
+			System.out.println(">>Bubblesort");
+			for (int n = right; n > left + 1; n--) {
+				for (int i = left; i < n - 1; i++) {
+					if (sequence[i] > sequence[i + 1]) {
+						swapAt(i, i + 1);
+					}
+				}
 			}
 		} else {
 			int splitIndex = partition(left, right);
-			sort(left, splitIndex);
+			printSequence(0, sequence.length - 1);
+			System.out.print("  -->" + left + " " + splitIndex + " (" + sequence[splitIndex] + ") " + right);
+			System.out.println();
+			sort(left, splitIndex - 1);
 			sort(splitIndex, right);
 		}
 	}
 
+	private void printSequence(int l, int r) {
+		for (int i = 0; i <= sequence.length - 1; i++) {
+			if (i >= l) {
+				System.out.print(sequence[i] + "\t");
+			} else {
+				System.out.print("\t");
+			}
+		}
+	}
+
 	private int partition(int left, int right) {
-		int pivotIndex = (int) ((right - left) * Math.random());
+		int pivotIndex = left + (int) ((right - left) * Math.random());
 		float pivot = sequence[pivotIndex];
+		System.out.println("pivot is " + pivot + " = [" + (pivotIndex - left) + "] between " + left + " - " + right);
 		int lI = left;
 		int rI = right;
+		int firstPivotIndex = sequence.length;
 		while (lI <= rI) {
+			printSequence(left, right);
+			System.out.println();
 			if (sequence[lI] > pivot) {
-				float tmp = sequence[lI];
-				sequence[rI] = sequence[lI];
-				sequence[lI] = tmp;
+				swapAt(rI, lI);
 				rI--;
 			} else {
-				if (sequence[lI] == pivot) {
-					pivotIndex = lI;
+				if (firstPivotIndex > lI && pivot == sequence[lI]) {
+					firstPivotIndex = lI;
+				} else {
+					if (firstPivotIndex < sequence.length && sequence[lI] < pivot) {
+						swapAt(lI, firstPivotIndex);
+						firstPivotIndex = lI;
+					}
 				}
 				lI++;
 			}
 		}
-		return pivotIndex;
+		return firstPivotIndex;
+	}
+
+	private void swapAt(int i, int j) {
+		float tmp = sequence[i];
+		sequence[i] = sequence[j];
+		sequence[j] = tmp;
 	}
 }

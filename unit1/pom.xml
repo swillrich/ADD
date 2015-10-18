@@ -10,8 +10,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
+			<version>4.4</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -24,6 +23,10 @@
 							<mainClass>de.fu.add.Main</mainClass>
 						</manifest>
 					</archive>
+					<descriptorRefs>
+						<descriptorRef>
+							jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
 				</configuration>
 				<executions>
 					<execution>
