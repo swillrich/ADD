@@ -38,18 +38,10 @@ public class QuickSort {
 					left++;
 					right--;
 				}
-				// }
-				System.out.print("partitioning with " + right + " and " + left
-						+ " --> {");
-				printSequence(0, sequence.length - 1);
-				System.out.print("}");
-				System.out.println();
 				sort(start, right);
 				sort(left, stop);
 			}
 		}
-		printSequence(start, stop);
-		System.out.println();
 	}
 
 	public void bubbleSort(int start, int stop) {
@@ -60,10 +52,9 @@ public class QuickSort {
 				}
 			}
 		}
-		printSequence(start, stop);
 	}
 
-	private void printSequence(int l, int r) {
+	public void printSequence(int l, int r) {
 		for (int i = 0; i <= sequence.length - 1; i++) {
 			if (i >= l && i <= r) {
 				System.out.print(sequence[i] + "\t");

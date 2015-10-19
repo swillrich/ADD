@@ -1,7 +1,5 @@
 package de.fu.add;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -12,17 +10,13 @@ public class Main {
 		for (int i = 0; i < numberOfRuns; i++) {
 			input[i] = random.nextFloat();
 		}
-		show(input, numberOfRuns - 1, "Input");
+		show(input, "Input");
 		new QuickSort(input).go();
-		show(input, numberOfRuns - 1, "Output");
+		show(input, "Output");
 	}
 
-	private static void show(float[] toShow, int until, String desc) {
+	private static void show(float[] toShow, String desc) {
 		System.out.println(desc);
-		List<Float> temp = new ArrayList<Float>();
-		for (int i = 0; i < until + 1; i++) {
-			temp.add(toShow[i]);
-		}
-		System.out.println(temp);
+		new QuickSort(toShow).printSequence(0, toShow.length - 1);
 	}
 }
