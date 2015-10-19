@@ -13,8 +13,8 @@ public class Main {
 			input[i] = random.nextFloat();
 		}
 		show(input, numberOfRuns - 1, "Input");
-		float[] output = new QuickSort(input).go();
-		show(output, numberOfRuns - 1, "Output");
+		new QuickSort(input).go();
+		show(input, numberOfRuns - 1, "Output");
 	}
 
 	private static void show(float[] toShow, int until, String desc) {

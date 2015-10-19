@@ -11,22 +11,17 @@ public class QuickSort {
 		this.sequence = sequenz;
 	}
 
-	public float[] go() {
+	public void go() {
 		sort(0, sequence.length - 1);
-		return sequence;
 	}
 
 	private void sort(int start, int stop) {
 		if (start > stop) {
 			return;
 		}
-		System.out.print(start + " - " + stop + ": ");
-		// if (stop - start < b) {
-		// System.out.print("Bubblesort");
-		// System.out.println();
-		// bubbleSort(start, stop);
-		// } else {
-		if (stop - start > 0) {
+		if (stop - start < b) {
+			bubbleSort(start, stop);
+		} else {
 			int pivotIndex = start + random.nextInt(stop - start);
 			float pivot = sequence[pivotIndex];
 			int left = start;
@@ -57,14 +52,15 @@ public class QuickSort {
 		System.out.println();
 	}
 
-	private void bubbleSort(int start, int stop) {
+	public void bubbleSort(int start, int stop) {
 		for (int n = stop; n > start + 1; n--) {
-			for (int i = start; i < n - 1; i++) {
+			for (int i = start; i < n; i++) {
 				if (sequence[i] > sequence[i + 1]) {
 					swapAt(i, i + 1);
 				}
 			}
 		}
+		printSequence(start, stop);
 	}
 
 	private void printSequence(int l, int r) {
