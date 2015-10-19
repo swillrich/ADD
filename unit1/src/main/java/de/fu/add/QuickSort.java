@@ -1,8 +1,11 @@
 package de.fu.add;
 
+import java.util.Random;
+
 public class QuickSort {
 	private int b = 2;
 	private float[] sequence;
+	private Random random = new Random();
 
 	public QuickSort(float[] sequenz) {
 		this.sequence = sequenz;
@@ -13,62 +16,65 @@ public class QuickSort {
 		return sequence;
 	}
 
-	private void sort(int left, int right) {
-		System.out.print(left + " - " + right + ": ");
-		if (right - left <= b) {
-			System.out.print("Bubblesort");
-			System.out.println();
-			for (int n = right; n > left + 1; n--) {
-				for (int i = left; i < n - 1; i++) {
-					if (sequence[i] > sequence[i + 1]) {
-						swapAt(i, i + 1);
-					}
+	private void sort(int start, int stop) {
+		if (start > stop) {
+			return;
+		}
+		System.out.print(start + " - " + stop + ": ");
+		// if (stop - start < b) {
+		// System.out.print("Bubblesort");
+		// System.out.println();
+		// bubbleSort(start, stop);
+		// } else {
+		if (stop - start > 0) {
+			int pivotIndex = start + random.nextInt(stop - start);
+			float pivot = sequence[pivotIndex];
+			int left = start;
+			int right = stop;
+			while (left <= right) {
+				while (sequence[left] < pivot) {
+					left++;
+				}
+				while (sequence[right] > pivot) {
+					right--;
+				}
+				if (left <= right) {
+					swapAt(left, right);
+					left++;
+					right--;
+				}
+				// }
+				System.out.print("partitioning with " + right + " and " + left
+						+ " --> {");
+				printSequence(0, sequence.length - 1);
+				System.out.print("}");
+				System.out.println();
+				sort(start, right);
+				sort(left, stop);
+			}
+		}
+		printSequence(start, stop);
+		System.out.println();
+	}
+
+	private void bubbleSort(int start, int stop) {
+		for (int n = stop; n > start + 1; n--) {
+			for (int i = start; i < n - 1; i++) {
+				if (sequence[i] > sequence[i + 1]) {
+					swapAt(i, i + 1);
 				}
 			}
-		} else {
-			int splitIndex = partition(left, right);
-			System.out.print("partitioning with " + splitIndex);
-			System.out.println();
-			sort(left, splitIndex - 1);
-			sort(splitIndex + 1, right);
 		}
-		printSequence(left, right);
-		System.out.println();
 	}
 
 	private void printSequence(int l, int r) {
 		for (int i = 0; i <= sequence.length - 1; i++) {
-			if (i >= l) {
+			if (i >= l && i <= r) {
 				System.out.print(sequence[i] + "\t");
 			} else {
 				System.out.print("\t");
 			}
 		}
-	}
-
-	private int partition(int left, int right) {
-		int pivotIndex = left + (int) ((right - left) * Math.random());
-		float pivot = sequence[pivotIndex];
-		int lI = left;
-		int rI = right;
-		int firstPivotIndex = sequence.length;
-		while (lI <= rI) {
-			if (sequence[lI] > pivot) {
-				swapAt(rI, lI);
-				rI--;
-			} else {
-				if (firstPivotIndex > lI && pivot == sequence[lI]) {
-					firstPivotIndex = lI;
-				} else {
-					if (firstPivotIndex < sequence.length && sequence[lI] < pivot) {
-						swapAt(lI, firstPivotIndex);
-						firstPivotIndex = lI;
-					}
-				}
-				lI++;
-			}
-		}
-		return firstPivotIndex;
 	}
 
 	private void swapAt(int i, int j) {
