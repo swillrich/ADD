@@ -1,36 +1,67 @@
 package de.fu.add;
 
 import java.util.Date;
-import java.util.Random;
 
+/**
+ * This class represents an implementation for the QuckSort algorithm. The
+ * algorithm is implemented as in-place.
+ */
 public class QuickSort {
+	/**
+	 * The boundary at which the simple order algorithm should be activated.
+	 * Once the partition length comes below this particular value, the QuckSort
+	 * algorithm is getting displaced by the BubbleSort algorithm.
+	 */
 	private int b = 20;
+	/**
+	 * The sequence to be sorted.
+	 */
 	private float[] sequence;
-	private Random random = new Random();
-	long comparisonCounter = 0;
-	long start;
-	long end;
+	/**
+	 * The comparisons are counted by increment this value once a comparison
+	 * occurs.
+	 */
+	private long comparisonCounter = 0;
+	/**
+	 * The time the algorithm starts
+	 */
+	private long startTime;
+	/**
+	 * The time the algorithm terminates
+	 */
+	private long endTime;
 
 	public QuickSort(float[] sequenz) {
 		this.sequence = sequenz;
 	}
-	
+
 	public long getComparisons() {
 		return comparisonCounter;
 	}
 
 	public long getDuration() {
-		return ((end - start));
+		return ((endTime - startTime));
 	}
 
+	/**
+	 * Starts the QuckSort algorithm and gets a boundary (see b)
+	 */
 	public void go(int boundary) {
 		this.b = boundary;
 		System.out.println("Start QuickSort ...");
-		this.start = new Date().getTime();
+		this.startTime = new Date().getTime();
 		sort(0, sequence.length - 1);
-		this.end = new Date().getTime();
+		this.endTime = new Date().getTime();
 	}
 
+	/**
+	 * This method performs a QuckSort iteration and is calling recursively.
+	 * 
+	 * @param start
+	 *            at which index the partiton starts
+	 * @param stop
+	 *            at which index the partion ends
+	 */
 	private void sort(int start, int stop) {
 		addComparison();
 		if (start > stop) {
@@ -67,10 +98,19 @@ public class QuickSort {
 		}
 	}
 
+	/**
+	 * Every time a comparison occurs, this method counts.
+	 */
 	private void addComparison() {
 		this.comparisonCounter++;
 	}
 
+	/**
+	 * Applies the BubbleSort algorithm to the specified range (start and stop)
+	 * 
+	 * @param start
+	 * @param stop
+	 */
 	public void bubbleSort(int start, int stop) {
 		for (int n = stop; n > start + 1; n--) {
 			for (int i = start; i < n; i++) {
@@ -82,6 +122,14 @@ public class QuickSort {
 		}
 	}
 
+	/**
+	 * Prints out the content of the sequence between the given range.
+	 * 
+	 * @param l
+	 *            left index
+	 * @param r
+	 *            right index
+	 */
 	public void printSequence(int l, int r) {
 		for (int i = 0; i <= sequence.length - 1; i++) {
 			if (i >= l && i <= r) {
@@ -92,12 +140,18 @@ public class QuickSort {
 		}
 	}
 
+	/**
+	 * Swaps the element at i with the element at j.
+	 */
 	private void swapAt(int i, int j) {
 		float tmp = sequence[i];
 		sequence[i] = sequence[j];
 		sequence[j] = tmp;
 	}
 
+	/**
+	 * Prints out some statistics relating the current run.
+	 */
 	public void printStats() {
 		System.out.println("QuickSort terminates!");
 		System.out.print("Snipped: ");
