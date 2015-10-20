@@ -13,7 +13,7 @@ import dnl.utils.text.table.TextTable;
  */
 public class Main {
 	public static void main(String[] args) {
-		// bestBoundary();
+		bestBoundary();
 		severalRuns();
 	}
 
