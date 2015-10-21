@@ -12,6 +12,9 @@ import dnl.utils.text.table.TextTable;
  * method.
  */
 public class Main {
+
+	private static int N20MIL = (int) (Math.pow(10, 6) * 20);
+
 	public static void main(String[] args) {
 		bestBoundary();
 		severalRuns();
@@ -22,12 +25,11 @@ public class Main {
 	 */
 	private static void severalRuns() {
 		Object[][] data = new Object[20][];
-		int n = 2000;
 		for (int i = 0; i < data.length; i++) {
-			float[] input = randomizedGeneration(n);
+			float[] input = randomizedGeneration(N20MIL);
 			QuickSort quickSort = new QuickSort(input);
 			quickSort.go(50);
-			data[i] = new Object[] { n, quickSort.getDuration(), quickSort.getComparisons() };
+			data[i] = new Object[] { N20MIL, quickSort.getDuration(), quickSort.getComparisons() };
 		}
 		String[] columnNames = { "N", "duration in ms", "# of Comparisons" };
 		TextTable tt = new TextTable(columnNames, data);
@@ -41,12 +43,11 @@ public class Main {
 	 * terminates.
 	 */
 	private static void bestBoundary() {
-		int numberOfRuns = 3000; // (int) (Math.pow(10, 6) * 20);
-		float[] origin = randomizedGeneration(numberOfRuns);
+		float[] origin = randomizedGeneration(N20MIL);
 		long maximum = 0;
 		float[] input;
 		List<Object[]> tmpList = new ArrayList<Object[]>();
-		for (int i = 100, after = 1; after < 4; i = i + 50) {
+		for (int i = 2, after = 1; after < 4; i = i + 1) {
 			input = Arrays.copyOf(origin, origin.length);
 			QuickSort quickSort = new QuickSort(input);
 			quickSort.go(i);
@@ -56,7 +57,7 @@ public class Main {
 			} else {
 				after++;
 			}
-			tmpList.add(new Object[] { numberOfRuns, i, duration, quickSort.getComparisons() });
+			tmpList.add(new Object[] { N20MIL, i, duration, quickSort.getComparisons() });
 		}
 		Object[][] data = new Object[6][];
 		for (int i = (tmpList.size() >= 7 ? tmpList.size() - 7 : 0), arrI = 0; i < tmpList.size()

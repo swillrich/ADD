@@ -92,9 +92,9 @@ public class QuickSort {
 					left++;
 					right--;
 				}
-				sort(start, right);
-				sort(left, stop);
 			}
+			sort(start, right);
+			sort(left, stop);
 		}
 	}
 
@@ -131,12 +131,8 @@ public class QuickSort {
 	 *            right index
 	 */
 	public void printSequence(int l, int r) {
-		for (int i = 0; i <= sequence.length - 1; i++) {
-			if (i >= l && i <= r) {
-				System.out.print(sequence[i] + "\t");
-			} else {
-				System.out.print("\t");
-			}
+		for (int i = 1; i <= 10; i++) {
+			System.out.print(sequence[i + 1]);
 		}
 	}
 
@@ -154,8 +150,6 @@ public class QuickSort {
 	 */
 	public void printStats() {
 		System.out.println("QuickSort terminates!");
-		System.out.print("Snipped: ");
-		printSequence(0, 10);
 		System.out.println();
 		System.out.println("Duration: " + getDuration() + " seconds");
 		System.out.println("Comparisons: " + this.comparisonCounter);
