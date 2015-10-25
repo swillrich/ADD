@@ -3,6 +3,8 @@ package de.fu.add;
 import java.util.Date;
 
 /**
+ * @author Daniel Spruch, Sven Willrich
+ * 
  * This class represents an implementation for the QuckSort algorithm. The
  * algorithm is implemented as in-place.
  */

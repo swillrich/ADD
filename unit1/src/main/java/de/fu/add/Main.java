@@ -8,6 +8,7 @@ import java.util.Random;
 import dnl.utils.text.table.TextTable;
 
 /**
+ * @author Daniel Spruch, Sven Willrich
  * This class executes the samples and test the code and consists of the main
  * method.
  */
@@ -47,7 +48,7 @@ public class Main {
 		long maximum = 0;
 		float[] input;
 		List<Object[]> tmpList = new ArrayList<Object[]>();
-		for (int i = 2, after = 1; after < 4; i = i + 1) {
+		for (int i = 2, after = 1; after < 6; i = i + 1) {
 			input = Arrays.copyOf(origin, origin.length);
 			QuickSort quickSort = new QuickSort(input);
 			quickSort.go(i);
