@@ -2,6 +2,8 @@ package de.fu.add;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 class TopoSort {
@@ -70,57 +72,64 @@ class TopoSort {
 		}
 	}
 
-	Stack<Knoten> stack = new Stack<Knoten>();
-	int globalTime = 0;
-
 	private void showAllCircles() {
 		System.out.println("\nThe graph contains the circles listed below");
 		for (Knoten n : Liste) {
-			if (n != null) {
+			if (n != null && n.index == -1) {
 				search(n.ersterNachfolger);
 			}
 		}
 	}
 
+	Stack<Knoten> stack = new Stack<Knoten>();
+	int index = 0;
+
 	private void search(Kante k) {
 		if (k == null) {
 			return;
 		}
-		Knoten n = k.u;
-		n.visited = true;
-		globalTime++;
-		stack.push(n);
-		n.isInStack = true;
-		for (Kante e = n.ersterNachfolger; e != null; e = e.next) {
-			Knoten v = e.v;
-			if (v.isInStack) {
-				System.out.println("Circle detected:");
-				Knoten first = stack.pop();
-				Knoten next = null;
-				first.isInStack = false;
-				String output = "" + first;
-				while (!stack.isEmpty()) {
-					next = stack.pop();
-					next.isInStack = false;
-					output = next + " -> " + output;
-					if (next == v) {
-						break;
-					}
+		Knoten v = k.u;
+		v.index = index;
+		v.lowlink = index;
+		index++;
+		stack.push(v);
+		v.onStack = true;
+		for (Kante e = v.ersterNachfolger; e != null; e = e.next) {
+			Knoten w = e.v;
+			if (w.onStack) {
+				v.lowlink = w.index < v.lowlink ? w.index : v.lowlink;
+			} else if (w.index == -1) {
+				search(w.ersterNachfolger);
+				v.lowlink = w.lowlink < v.lowlink ? w.lowlink : v.lowlink;
+			}
+		}
+		if (v.lowlink == v.index) {
+			List<Knoten> circle = new ArrayList<Knoten>();
+			Knoten w = null;
+			do {
+				w = stack.pop();
+				w.onStack = false;
+				circle.add(w);
+			} while (w != v);
+			if (circle.size() > 2) {
+				System.out.println("new circle detected:");
+				for (int i = circle.size() - 1; i >= 0; i--) {
+					System.out.print(circle.get(i) + (i > 0 ? " -> " : ""));
 				}
-				output = output + " and back to " + next;
-				System.out.println(output + "\n");
-			} else {
-				search(v.ersterNachfolger);
+				System.out.print(" and back to "
+						+ circle.get(circle.size() - 1));
+				System.out.println();
 			}
 		}
 	}
 }
 
 class Knoten {
-	boolean visited = false;
+	int lowlink;
+	int index = -1;
 	int Name, anzVorgaenger;
 	Kante ersterNachfolger;
-	boolean isInStack;
+	boolean onStack;
 
 	Knoten(int i) {
 		Name = i;
