@@ -111,7 +111,7 @@ class TopoSort {
 				w.onStack = false;
 				circle.add(w);
 			} while (w != v);
-			if (circle.size() > 2) {
+			if (circle.size() > 1) {
 				System.out.println("new circle detected:");
 				for (int i = circle.size() - 1; i >= 0; i--) {
 					System.out.print(circle.get(i) + (i > 0 ? " -> " : ""));
