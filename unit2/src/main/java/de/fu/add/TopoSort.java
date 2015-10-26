@@ -1,7 +1,8 @@
 package de.fu.add;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.Stack;
 
 class TopoSort {
 	int n;
@@ -69,17 +70,57 @@ class TopoSort {
 		}
 	}
 
+	Stack<Knoten> stack = new Stack<Knoten>();
+	int globalTime = 0;
+
 	private void showAllCircles() {
-		Knoten[] copy = Arrays.copyOf(this.Liste, this.Liste.length);
-		for (Knoten k : copy) {
-			
+		System.out.println("\nThe graph contains the circles listed below");
+		for (Knoten n : Liste) {
+			if (n != null) {
+				search(n.ersterNachfolger);
+			}
+		}
+	}
+
+	private void search(Kante k) {
+		if (k == null) {
+			return;
+		}
+		Knoten n = k.u;
+		n.visited = true;
+		globalTime++;
+		stack.push(n);
+		n.isInStack = true;
+		for (Kante e = n.ersterNachfolger; e != null; e = e.next) {
+			Knoten v = e.v;
+			if (v.isInStack) {
+				System.out.println("Circle detected:");
+				Knoten first = stack.pop();
+				Knoten next = null;
+				first.isInStack = false;
+				String output = "" + first;
+				while (!stack.isEmpty()) {
+					next = stack.pop();
+					next.isInStack = false;
+					output = next + " -> " + output;
+					if (next == v) {
+						break;
+					}
+				}
+				output = output + " and back to " + next;
+				System.out.println(output + "\n");
+			} else {
+				search(v.ersterNachfolger);
+			}
 		}
 	}
 }
 
 class Knoten {
+	boolean visited = false;
 	int Name, anzVorgaenger;
 	Kante ersterNachfolger;
+	boolean isInStack;
 
 	Knoten(int i) {
 		Name = i;
