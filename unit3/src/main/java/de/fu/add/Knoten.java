@@ -1,7 +1,11 @@
 package de.fu.add;
 
+/**
+ * @author willrich
+ *
+ *         Ein Knoten, der im Baum ist
+ */
 public class Knoten {
-	private String value = "";
 	private Knoten left;
 	private Knoten right;
 	private int id;
@@ -11,20 +15,12 @@ public class Knoten {
 		right = new Knoten();
 	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public Knoten getLeft() {
 		return left;
 	}
 
 	public Knoten getRight() {
 		return right;
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 	public void setId(int i) {

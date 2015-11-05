@@ -1,16 +1,31 @@
 package de.fu.add;
 
+/**
+ * @author willrich
+ * 
+ *         Generiert einen vollen Binaer-Baum
+ */
 public class Baum {
 
+	/**
+	 * Der Root-Knoten
+	 */
 	private Knoten root = new Knoten();
 
 	public Knoten getRoot() {
 		return root;
 	}
 
+	/**
+	 * Nummeriert die Knoten aufsteigend durch (DFS-Reihenfolge)
+	 */
 	int numbering = 0;
 
-	public Baum(final int maxTiefe) {
+	/**
+	 * Konstruiert einen vollen binaeren Baum anhand einer maximalen Tiefe, die
+	 * fuer alle Blaetter gilt.
+	 */
+	public void createFullBinaryTree(final int maxTiefe) {
 
 		new BaumDFS(root) {
 
