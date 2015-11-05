@@ -4,7 +4,7 @@ public class MittlererWegLaengenFinder {
 	
 	int summe = 0;
 	int tmpCounter = 0;
-	int anzahlBlaetter = 0;
+	int anzahlKnoten = 0;
 	
 	
 	public void finde(Baum baum) {
@@ -13,16 +13,14 @@ public class MittlererWegLaengenFinder {
 			@Override
 			public void visit(Knoten k, int tiefe) {
 				tmpCounter++;
-				if (k.getLeft() == null && k.getRight() == null) {
-					summe += tmpCounter - 1;
-					anzahlBlaetter++;
-				}
+				anzahlKnoten++;
+				summe += tmpCounter - 1;
 			}
 
 			public void leaf(Knoten k, int tiefe) {
 				tmpCounter--;
 			}
 		};
-		System.out.println("Mittlere innere Weglänge ist " + (summe / anzahlBlaetter));
+		System.out.println("Mittlere innere Weglänge ist " + (summe / anzahlKnoten));
 	}
 }
